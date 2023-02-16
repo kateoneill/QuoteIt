@@ -27,5 +27,12 @@
             android:layout_below="@id/quotation"
             tools:text="A Description" />
 
+        <TextView
+            android:id="@+id/pageNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quotation"
+            tools:text="Page Number" />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

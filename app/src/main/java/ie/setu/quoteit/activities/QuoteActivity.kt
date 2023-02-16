@@ -3,6 +3,7 @@ package ie.setu.quoteit.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
+import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.ActivityQuoteitBinding
 import ie.setu.quoteit.main.MainApp
 import ie.setu.quoteit.models.QuoteModel
@@ -24,6 +25,7 @@ class QuoteActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             quote.quotation = binding.quotation.text.toString()
             quote.bookTitle = binding.bookTitle.text.toString()
+            quote.pageNumber = binding.pageNumber.value
             if (quote.quotation.isNotEmpty()) {
                 app.quotes.add(quote.copy())
                 i("add Button Pressed: ${quote}")
@@ -39,11 +41,12 @@ class QuoteActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             quote.quotation = binding.quotation.text.toString()
             quote.bookTitle = binding.bookTitle.text.toString()
+            quote.pageNumber = binding.pageNumber.value
             if (quote.quotation.isNotEmpty()) {
                 app.quotes.add(quote.copy())
                 i("add Button Pressed: ${quote}")
                 for (i in app.quotes.indices) {
-                    i("Placemark[$i]:${this.app.quotes[i]}")
+                    i("Quote[$i]:${this.app.quotes[i]}")
                 }
                 setResult(RESULT_OK)
                 finish()
@@ -53,8 +56,19 @@ class QuoteActivity : AppCompatActivity() {
                     .show()
             }
         }
+
+        setUpNumberPicker()
     }
+
+    private fun setUpNumberPicker() {
+        val numberPicker = binding.pageNumber
+        numberPicker.minValue = 0
+        numberPicker.maxValue = 200
+        numberPicker.wrapSelectorWheel = true
+        }
+
 }
+
 
 
 

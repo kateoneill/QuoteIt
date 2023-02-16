@@ -4,5 +4,5 @@
     <string name="hint_Quotation">Quotation</string>
     <string name="hint_quoteBook">Book from</string>
     <string name="menu_addQuote">Add</string>
-
+    <string name="hint_pageNumber">Page Number</string>
 </resources>
