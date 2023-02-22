@@ -27,6 +27,7 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:titleTextColor="@color/colorPrimary" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -68,6 +69,36 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp" />
 
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/hint_pageNumber"
+                android:textSize="16sp" />
+
+            <NumberPicker
+                android:id="@+id/pageNumber"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:autofillHints="hint"
+                android:hint="@string/hint_pageNumber" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/hint_theme"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerThemes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="match_parent"
@@ -80,6 +111,7 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
                 android:text="@string/button_addQuote"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
+
         </LinearLayout>
     </ScrollView>
 

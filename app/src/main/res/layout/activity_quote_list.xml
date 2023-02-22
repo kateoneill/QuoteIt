@@ -5,7 +5,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context="ie.setu.quoteit.activities.QuoteListActivity">
+tools:context="ie.setu.quoteit.activities.QuoteListActivity"
+    android:id="@+id/coordinatorLayout">
 
 <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
@@ -20,13 +21,29 @@ tools:context="ie.setu.quoteit.activities.QuoteListActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@color/colorPrimary" />
-</com.google.android.material.appbar.AppBarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:translationY="170dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="158dp"
+        android:scaleType="centerCrop"
+        android:translationY="50dp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/book"
+        tools:layout_conversion_absoluteHeight="183dp"
+        tools:layout_conversion_absoluteWidth="411dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="50dp" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

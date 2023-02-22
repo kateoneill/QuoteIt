@@ -4,5 +4,21 @@
     <string name="hint_Quotation">Quotation</string>
     <string name="hint_quoteBook">Book from</string>
     <string name="menu_addQuote">Add</string>
-
+    <string name="hint_pageNumber">Page Number</string>
+    <string name="menu_cancelQuote">Cancel</string>
+    <string name="hint_theme">Theme</string>
+    <string-array name="themes">
+        <item>Love</item>
+        <item>Friendship</item>
+        <item>Beauty</item>
+        <item>Good vs Evil</item>
+        <item>Coming of age</item>
+        <item>Loyalty</item>
+        <item>Betrayal</item>
+        <item>Life and Death</item>
+        <item>Justice</item>
+        <item>Family</item>
+        <item>Identity</item>
+        <item>Hope</item>
+    </string-array>
 </resources>

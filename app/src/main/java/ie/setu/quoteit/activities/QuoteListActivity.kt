@@ -1,5 +1,7 @@
 package ie.setu.quoteit.activities
 
+import QuoteAdapter
+import QuoteListener
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +19,7 @@ import ie.setu.quoteit.databinding.CardQuoteBinding
 import ie.setu.quoteit.main.MainApp
 import ie.setu.quoteit.models.QuoteModel
 
-class QuoteListActivity : AppCompatActivity() {
+class QuoteListActivity : AppCompatActivity(), QuoteListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityQuoteListBinding
@@ -33,13 +35,14 @@ class QuoteListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = QuoteAdapter(app.quotes)
+        binding.recyclerView.adapter = QuoteAdapter(app.quotes.findAll(),this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
@@ -50,40 +53,32 @@ class QuoteListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onQuoteClick(quote: QuoteModel) {
+        val launcherIntent = Intent(this, QuoteActivity::class.java)
+        launcherIntent.putExtra("quote_edit", quote)
+        getClickResult.launch(launcherIntent)
+    }
+
+
+    private val getClickResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.quotes.findAll().size)
+            }
+        }
+
+
     private val getResult =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.quotes.size)
+                notifyItemRangeChanged(0,app.quotes.findAll().size)
             }
         }
 }
 
-class QuoteAdapter constructor(private var quotes: List<QuoteModel>) :
-    RecyclerView.Adapter<QuoteAdapter.MainHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardQuoteBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return MainHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val quote = quotes[holder.adapterPosition]
-        holder.bind(quote)
-    }
-
-    override fun getItemCount(): Int = quotes.size
-
-    class MainHolder(private val binding : CardQuoteBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(quote: QuoteModel) {
-            binding.quotation.text = quote.quotation
-            binding.bookTitle.text = quote.bookTitle
-        }
-    }
-}
