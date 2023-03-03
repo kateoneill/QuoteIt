@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="ie.setu.quoteit.activities.QuoteListActivity"
-    android:id="@+id/coordinatorLayout">
-
-<com.google.android.material.appbar.AppBarLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/ultra_violet"
-    android:fitsSystemWindows="true"
-    app:elevation="0dip"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    tools:context="ie.setu.quoteit.activities.QuoteListActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@color/colorPrimary" />
+        android:background="@color/ultra_violet"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dip">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -29,7 +29,7 @@ tools:context="ie.setu.quoteit.activities.QuoteListActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:translationY="170dp"
+        android:translationY="180dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <ImageView
@@ -44,6 +44,8 @@ tools:context="ie.setu.quoteit.activities.QuoteListActivity"
         tools:layout_conversion_absoluteWidth="411dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="50dp" />
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

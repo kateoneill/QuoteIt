@@ -10,7 +10,7 @@ internal fun getId(): Long {
 
 class QuoteMemStore : QuoteStore {
 
-    val quotes = ArrayList<QuoteModel>()
+    private val quotes = ArrayList<QuoteModel>()
 
     override fun findAll(): List<QuoteModel> {
         return quotes
@@ -27,8 +27,16 @@ class QuoteMemStore : QuoteStore {
         if (foundQuote != null) {
             foundQuote.quotation = quote.quotation
             foundQuote.bookTitle = quote.bookTitle
+            foundQuote.pageNumber = quote.pageNumber
+            foundQuote.quoteTheme = quote.quoteTheme
+            foundQuote.isFavourite = quote.isFavourite
             logAll()
         }
+    }
+
+    override fun delete(quote: QuoteModel) {
+        quotes.remove(quote)
+        i("quote is deleted!")
     }
 
     private fun logAll() {
