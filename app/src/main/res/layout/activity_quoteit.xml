@@ -20,7 +20,7 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
         android:background="@color/ultra_violet"
         android:fitsSystemWindows="true"
         app:elevation="0dip"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarAdd"
@@ -95,9 +95,25 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
                 android:textSize="16sp" />
 
             <Spinner
-                android:id="@+id/spinnerThemes"
+                android:id="@+id/quoteTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/favourite_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="@+id/favourite_question" />
+
+            <ToggleButton
+                android:id="@+id/hint_fave"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/like_selector"
+                android:textOff=""
+                android:textOn=""
+                android:translationX="175dp" />
 
             <Button
                 android:id="@+id/btnAdd"

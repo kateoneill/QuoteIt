@@ -4,4 +4,5 @@ interface QuoteStore {
     fun findAll(): List<QuoteModel>
     fun create(quote: QuoteModel)
     fun update(quote: QuoteModel)
+    fun delete(quote: QuoteModel)
 }

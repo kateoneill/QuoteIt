@@ -8,5 +8,6 @@ data class QuoteModel(
     var quotation: String = "",
     var bookTitle: String ="",
     var pageNumber: Int = 0,
-    var quoteTheme: String = ""
+    var quoteTheme: String = "",
+    var isFavourite: Boolean = false
 ) : Parcelable

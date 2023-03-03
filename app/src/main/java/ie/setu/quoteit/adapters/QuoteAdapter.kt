@@ -1,8 +1,10 @@
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.CardQuoteBinding
 import ie.setu.quoteit.models.QuoteModel
+import ie.setu.quoteit.models.QuoteStore
 
 interface QuoteListener {
     fun onQuoteClick(quote: QuoteModel)
@@ -32,7 +34,15 @@ class QuoteAdapter constructor(private var quotes: List<QuoteModel>,
         fun bind(quote: QuoteModel, listener: QuoteListener) {
             binding.quotation.text = quote.quotation
             binding.bookTitle.text = quote.bookTitle
+            binding.pageNumber.text = quote.pageNumber.toString()
+            binding.quoteTheme.text = quote.quoteTheme
+            if(quote.isFavourite) {
+                binding.favouriteQuote.setImageResource(R.drawable.baseline_star_24)
+            }
             binding.root.setOnClickListener { listener.onQuoteClick(quote) }
         }
     }
 }
+
+
+
