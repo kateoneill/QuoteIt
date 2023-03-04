@@ -57,7 +57,6 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                i("hahhaha you were fooled")
                 filterQuotes(newText).toString()
                 return true
             }
@@ -72,9 +71,8 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
             for (quote in quotes) {
                 if (quote.quotation.lowercase(Locale.ROOT).contains(search.lowercase(Locale.getDefault()))) {
                     filteredQuoteList.add(quote)
-                    i("This quote is there")
+                    i("This quote is in the quote system")
 //                    println(quote)
-                    quoteAdapter.setFilteredList(filteredQuoteList)
                 }
             }
 
@@ -82,8 +80,8 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
                 i("There are no quotes")
                 Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show()
             } else {
-                i("There is a quote")
-//                quoteAdapter.setFilteredList(filteredQuoteList)
+                i("There are quotes")
+                quoteAdapter.setFilteredList(filteredQuoteList)
             }
         }
     }
