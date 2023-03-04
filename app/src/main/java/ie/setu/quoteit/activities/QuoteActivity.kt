@@ -1,15 +1,20 @@
 package ie.setu.quoteit.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.ActivityQuoteitBinding
+import ie.setu.quoteit.helpers.showImagePicker
 import ie.setu.quoteit.main.MainApp
 import ie.setu.quoteit.models.QuoteModel
 import timber.log.Timber.i
@@ -20,6 +25,7 @@ class QuoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityQuoteitBinding
     var quote = QuoteModel()
     lateinit var app: MainApp
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +33,6 @@ class QuoteActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
-
 
         app = application as MainApp
         i("Quoteit Activity started...")
@@ -45,6 +50,9 @@ class QuoteActivity : AppCompatActivity() {
                 binding.hintFave.isChecked.apply{false}
             }
             binding.btnAdd.setText(R.string.save_quote)
+            Picasso.get()
+                .load(quote.image)
+                .into(binding.placemarkImage)
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -71,14 +79,37 @@ class QuoteActivity : AppCompatActivity() {
                     app.quotes.create(quote.copy())
                     setResult(RESULT_OK)
                     finish()
-                }
-
-            }
+                }}
         }
 
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
+        }
+
+        registerImagePickerCallback()
         setUpNumberPicker()
         spinnerSetup()
     }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            quote.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(quote.image)
+                                .into(binding.placemarkImage)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
 
     private fun spinnerSetup() {
         val quoteThemes = resources.getStringArray(R.array.themes)
