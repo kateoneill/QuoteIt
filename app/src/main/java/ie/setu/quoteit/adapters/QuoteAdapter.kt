@@ -3,6 +3,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.CardQuoteBinding
 import ie.setu.quoteit.models.QuoteModel
@@ -44,6 +45,7 @@ class QuoteAdapter constructor(private var quotes: List<QuoteModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(quote: QuoteModel, listener: QuoteListener) {
+            Picasso.get().load(quote.image).into(binding.quoteImage)
             binding.quotation.text = quote.quotation
             binding.bookTitle.text = quote.bookTitle
             binding.pageNumber.text = quote.pageNumber.toString()

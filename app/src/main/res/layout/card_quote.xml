@@ -15,6 +15,14 @@
         android:padding="16dp"
         android:translationX="15dp">
 
+        <ImageView
+            android:id="@+id/quoteImage"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:contentDescription="@string/display_quote_image"/>
+
         <TextView
             android:id="@+id/quotation"
             android:layout_width="wrap_content"
@@ -22,6 +30,7 @@
             android:layout_alignParentTop="true"
             android:textSize="30sp"
             android:textStyle="italic"
+            android:translationX="100dp"
             tools:text="A Title" />
 
         <TextView
@@ -29,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/quotation"
+            android:translationX="100dp"
             tools:text="A Description" />
 
         <TextView
@@ -37,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/quotation"
             android:layout_marginTop="54dp"
+            android:translationX="100dp"
             tools:text="Page Number" />
 
         <TextView
@@ -44,8 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/quotation"
-            android:layout_marginTop="54dp"
             android:layout_marginStart="54dp"
+            android:layout_marginTop="54dp"
+            android:translationX="100dp"
             tools:text="The theme" />
 
 

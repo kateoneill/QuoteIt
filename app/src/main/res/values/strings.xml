@@ -12,6 +12,9 @@
     <string name="hint_theme">Theme</string>
     <string name="like">Like</string>
     <string name="save_quote">Save Quote</string>
+    <string name="button_addImage"> Add Image </string>
+    <string name="select_placemark_image">Select quote image</string>
+    <string name="display_quote_image">Quote Image</string>
     <string-array name="themes">
         <item>Love</item>
         <item>Friendship</item>
