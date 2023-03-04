@@ -7,7 +7,6 @@
     android:layout_marginBottom="8dp"
     android:backgroundTint="#FFFFFF"
     android:elevation="24dp"
-    android:translationX="15dp"
     app:cardElevation="4dp">
 
     <RelativeLayout

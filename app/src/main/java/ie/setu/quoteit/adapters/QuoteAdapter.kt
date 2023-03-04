@@ -1,10 +1,13 @@
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.CardQuoteBinding
 import ie.setu.quoteit.models.QuoteModel
-import ie.setu.quoteit.models.QuoteStore
+import timber.log.Timber.i
+import java.util.ArrayList
 
 interface QuoteListener {
     fun onQuoteClick(quote: QuoteModel)
@@ -20,6 +23,15 @@ class QuoteAdapter constructor(private var quotes: List<QuoteModel>,
 
         return MainHolder(binding)
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setFilteredList(filteredQuoteList: List<QuoteModel>){
+        this.quotes = filteredQuoteList
+        i("its adding up")
+        println(filteredQuoteList)
+        notifyDataSetChanged()
+    }
+
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val quote = quotes[holder.adapterPosition]
