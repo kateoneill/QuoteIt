@@ -10,26 +10,26 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.ActivityQuoteListBinding
-import ie.setu.quoteit.databinding.CardQuoteBinding
 import ie.setu.quoteit.main.MainApp
 import ie.setu.quoteit.models.QuoteModel
-import ie.setu.quoteit.models.QuoteStore
 import java.util.*
-import kotlin.collections.ArrayList
 import androidx.appcompat.widget.SearchView
-import java.util.Locale.filter
+import ie.setu.quoteit.models.QuoteMemStore
+import timber.log.Timber.i
+import kotlin.collections.ArrayList
 
 class QuoteListActivity : AppCompatActivity(), QuoteListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityQuoteListBinding
-    lateinit var searchView: SearchView
-    var quoteAdapter: QuoteAdapter? = null
+    private lateinit var searchView: SearchView
+
+    private var quotes = ArrayList<QuoteModel>()
+    private lateinit var quoteAdapter: QuoteAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +40,52 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
 
         app = application as MainApp
 
+        searchView = findViewById(R.id.searchView)
+
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = QuoteAdapter(app.quotes.findAll(),this)
+
+        quoteAdapter = QuoteAdapter(quotes, this)
+        addQuoteToList()
+    }
+
+    private fun addQuoteToList() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                i("hahhaha you were fooled")
+                filterQuotes(newText).toString()
+                return true
+            }
+        })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filterQuotes(search: String?) {
+        if (search != null) {
+            val filteredQuoteList: ArrayList<QuoteModel> = ArrayList()
+            quotes = app.quotes.findAll() as ArrayList<QuoteModel>
+            for (quote in quotes) {
+                if (quote.quotation.lowercase(Locale.ROOT).contains(search.lowercase(Locale.getDefault()))) {
+                    filteredQuoteList.add(quote)
+                    i("This quote is there")
+//                    println(quote)
+                    quoteAdapter.setFilteredList(filteredQuoteList)
+                }
+            }
+
+            if (filteredQuoteList.isEmpty()) {
+                i("There are no quotes")
+                Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show()
+            } else {
+                i("There is a quote")
+//                quoteAdapter.setFilteredList(filteredQuoteList)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
