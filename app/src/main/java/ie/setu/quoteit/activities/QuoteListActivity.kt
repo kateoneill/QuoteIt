@@ -132,6 +132,5 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
                 notifyItemRangeChanged(0,app.quotes.findAll().size)
             }
         }
-
 }
 
