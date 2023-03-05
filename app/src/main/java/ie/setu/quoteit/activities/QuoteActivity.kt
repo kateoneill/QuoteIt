@@ -44,11 +44,7 @@ class QuoteActivity : AppCompatActivity() {
             binding.bookTitle.setText(quote.bookTitle)
             binding.pageNumber.setValue(quote.pageNumber)
             binding.quoteTheme.setSelection(quote.quoteTheme.length)
-            quote.isFavourite = if (!quote.isFavourite) {
-                binding.hintFave.isChecked.apply { true }
-            } else {
-                binding.hintFave.isChecked.apply{false}
-            }
+            binding.hintFave.isChecked.apply { true }
             binding.btnAdd.setText(R.string.save_quote)
             Picasso.get()
                 .load(quote.image)
@@ -60,11 +56,7 @@ class QuoteActivity : AppCompatActivity() {
             quote.bookTitle = binding.bookTitle.text.toString()
             quote.pageNumber = binding.pageNumber.value
             quote.quoteTheme = binding.quoteTheme.selectedItem.toString()
-            quote.isFavourite = if (!quote.isFavourite) {
-                binding.hintFave.isChecked.apply { true }
-            } else {
-                binding.hintFave.isChecked.apply{false}
-            }
+            quote.isFavourite = binding.hintFave.isChecked.apply { true }
 
             if (quote.quotation.isEmpty()) {
                 Snackbar.make(it,"Please Enter a title", Snackbar.LENGTH_LONG)
