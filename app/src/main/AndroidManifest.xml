@@ -18,7 +18,7 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".MapActivity"
+            android:name=".activities.MapActivity"
             android:exported="false"
             android:label="@string/title_activity_map" />
         <activity
@@ -40,5 +40,6 @@
                 android:value="" />
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
 </manifest>

@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import ie.setu.quoteit.MapActivity
 import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.ActivityQuoteitBinding
 import ie.setu.quoteit.helpers.showImagePicker
@@ -87,10 +86,17 @@ class QuoteActivity : AppCompatActivity() {
         }
 
         binding.chooseImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
+            showImagePicker(imageIntentLauncher,this)
         }
 
+
         binding.placemarkLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (quote.zoom != 0f) {
+                location.lat =  quote.lat
+                location.lng = quote.lng
+                location.zoom = quote.zoom
+            }
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
@@ -111,14 +117,18 @@ class QuoteActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
+                            quote.lat = location.lat
+                            quote.lng = location.lng
+                            quote.zoom = location.zoom
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
     }
+
 
 
     private fun registerImagePickerCallback() {
@@ -129,17 +139,23 @@ class QuoteActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            quote.image = result.data!!.data!!
+
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            quote.image = image
+
                             Picasso.get()
                                 .load(quote.image)
                                 .into(binding.placemarkImage)
                             binding.chooseImage.setText(R.string.change_quote_image)
-                        }
+                        } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
     }
+
 
 
     private fun spinnerSetup() {
