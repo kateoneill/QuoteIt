@@ -30,6 +30,7 @@ class QuoteMemStore : QuoteStore {
             foundQuote.pageNumber = quote.pageNumber
             foundQuote.quoteTheme = quote.quoteTheme
             foundQuote.isFavourite = quote.isFavourite
+            foundQuote.image = quote.image
             logAll()
         }
     }

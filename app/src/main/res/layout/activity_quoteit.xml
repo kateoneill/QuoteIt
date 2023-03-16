@@ -105,6 +105,20 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
                 android:autofillHints="hint"
                 android:hint="@string/hint_pageNumber" />
 
+            <Button
+                android:id="@+id/placemarkLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@color/colorAccent"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:stateListAnimator="@null"
+                android:text="@string/button_location"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"/>
+
+
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"

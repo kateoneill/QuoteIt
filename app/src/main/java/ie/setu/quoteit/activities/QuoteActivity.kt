@@ -1,21 +1,26 @@
 package ie.setu.quoteit.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import ie.setu.quoteit.MapActivity
 import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.ActivityQuoteitBinding
 import ie.setu.quoteit.helpers.showImagePicker
 import ie.setu.quoteit.main.MainApp
+import ie.setu.quoteit.models.Location
 import ie.setu.quoteit.models.QuoteModel
 import timber.log.Timber.i
 
@@ -26,6 +31,10 @@ class QuoteActivity : AppCompatActivity() {
     var quote = QuoteModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var location = Location(52.245696, -7.139102, 15f)
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +58,9 @@ class QuoteActivity : AppCompatActivity() {
             Picasso.get()
                 .load(quote.image)
                 .into(binding.placemarkImage)
+            if (quote.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_quote_image)
+            }
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -78,10 +90,36 @@ class QuoteActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
 
+        binding.placemarkLocation.setOnClickListener {
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
+
         registerImagePickerCallback()
         setUpNumberPicker()
         spinnerSetup()
+        registerMapCallback()
     }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
 
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
@@ -95,7 +133,8 @@ class QuoteActivity : AppCompatActivity() {
                             Picasso.get()
                                 .load(quote.image)
                                 .into(binding.placemarkImage)
-                        } // end of if
+                            binding.chooseImage.setText(R.string.change_quote_image)
+                        }
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
@@ -124,9 +163,25 @@ class QuoteActivity : AppCompatActivity() {
             R.id.item_cancel -> { finish() }
 
             R.id.item_delete -> {
-                app.quotes.delete(quote)
-                setResult(RESULT_OK)
-                finish()
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(R.string.dialogTitle)
+                    builder.setMessage(R.string.dialogMessage)
+                    builder.setIcon(R.drawable.delete_alert)
+
+
+                    builder.setPositiveButton("Yes"){ _, _ ->
+                        Toast.makeText(applicationContext,"Quote Deleted",Toast.LENGTH_LONG).show()
+                        i("Following quote has been deleted: $quote")
+                        app.quotes.delete(quote)
+                        setResult(RESULT_OK)
+                        finish()
+                    }
+                    builder.setNeutralButton("Cancel"){dialogInterface , which ->
+                        Toast.makeText(applicationContext,"Maybe it was a mistake, maybe you changed your mind, this quote is happy regardless",Toast.LENGTH_LONG).show()
+                    }
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
             }
         }
         return super.onOptionsItemSelected(item)
