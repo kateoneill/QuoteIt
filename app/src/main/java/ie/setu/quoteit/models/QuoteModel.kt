@@ -13,3 +13,8 @@ data class QuoteModel(
     var quoteTheme: String = "",
     var isFavourite: Boolean = false
 ) : Parcelable
+
+@Parcelize
+data class Location(var lat: Double = 0.0,
+                    var lng: Double = 0.0,
+                    var zoom: Float = 0f) : Parcelable

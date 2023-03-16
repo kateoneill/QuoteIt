@@ -45,11 +45,11 @@ class QuoteAdapter constructor(private var quotes: List<QuoteModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(quote: QuoteModel, listener: QuoteListener) {
-            Picasso.get().load(quote.image).into(binding.quoteImage)
             binding.quotation.text = quote.quotation
             binding.bookTitle.text = quote.bookTitle
             binding.pageNumber.text = quote.pageNumber.toString()
             binding.quoteTheme.text = quote.quoteTheme
+            Picasso.get().load(quote.image).resize(200,350).into(binding.imageIcon)
             if(quote.isFavourite) {
                 binding.favouriteQuote.setImageResource(R.drawable.baseline_star_24)
             }
