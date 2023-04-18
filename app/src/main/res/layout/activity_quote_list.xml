@@ -8,6 +8,11 @@
     android:background="@color/ultra_violet"
     tools:context="ie.setu.quoteit.activities.QuoteListActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,9 +72,9 @@
         android:layout_height="match_parent"
         android:scrollbarSize="10dp"
         android:scrollbarThumbVertical="@color/mindaro"
-        android:scrollbars="vertical"
-        android:translationY="220dp"
+        android:scrollbars="horizontal"
+        android:translationY="280dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

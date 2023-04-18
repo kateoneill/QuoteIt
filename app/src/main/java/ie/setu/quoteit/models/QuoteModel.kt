@@ -11,6 +11,9 @@ data class QuoteModel(
     var bookTitle: String ="",
     var pageNumber: Int = 0,
     var quoteTheme: String = "",
+    var lat : Double = 0.0,
+    var lng: Double = 0.0,
+    var zoom: Float = 0f,
     var isFavourite: Boolean = false
 ) : Parcelable
 

@@ -31,6 +31,9 @@ class QuoteMemStore : QuoteStore {
             foundQuote.quoteTheme = quote.quoteTheme
             foundQuote.isFavourite = quote.isFavourite
             foundQuote.image = quote.image
+            foundQuote.lat = quote.lat
+            foundQuote.lng = quote.lng
+            foundQuote.zoom = quote.zoom
             logAll()
         }
     }
@@ -42,5 +45,10 @@ class QuoteMemStore : QuoteStore {
 
     private fun logAll() {
         quotes.forEach { i("$it") }
+    }
+
+    override fun findById(id:Long) : QuoteModel? {
+        val foundQuote: QuoteModel? = quotes.find { it.id == id }
+        return foundQuote
     }
 }

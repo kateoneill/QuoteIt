@@ -5,4 +5,6 @@ interface QuoteStore {
     fun create(quote: QuoteModel)
     fun update(quote: QuoteModel)
     fun delete(quote: QuoteModel)
+
+    fun findById(id:Long) : QuoteModel?
 }

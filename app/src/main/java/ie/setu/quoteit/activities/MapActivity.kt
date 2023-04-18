@@ -1,4 +1,4 @@
-package ie.setu.quoteit
+package ie.setu.quoteit.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -16,7 +16,9 @@ import ie.setu.quoteit.R
 import ie.setu.quoteit.databinding.ActivityMapBinding
 import ie.setu.quoteit.models.Location
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarkerDragListener {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback,
+    GoogleMap.OnMarkerDragListener,
+    GoogleMap.OnMarkerClickListener {
 
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapBinding
@@ -40,21 +42,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
             .draggable(true)
             .position(loc)
         map.addMarker(options)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
         map.setOnMarkerDragListener(this)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+        map.setOnMarkerClickListener(this)
     }
-
-    override fun onBackPressed() {
-        val resultIntent = Intent()
-        resultIntent.putExtra("location", location)
-        setResult(Activity.RESULT_OK, resultIntent)
-        finish()
-        super.onBackPressed()
-    }
-
-    override fun onMarkerDrag(p0: Marker) {
-        TODO("Not yet implemented")
-    }
+    override fun onMarkerDrag(p0: Marker) {  }
 
     override fun onMarkerDragEnd(marker: Marker) {
         location.lat = marker.position.latitude
@@ -62,7 +54,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarker
         location.zoom = map.cameraPosition.zoom
     }
 
-    override fun onMarkerDragStart(p0: Marker) {
-        TODO("Not yet implemented")
+    override fun onMarkerDragStart(p0: Marker) {  }
+
+    override fun onBackPressed() {
+
+        val resultIntent = Intent()
+        resultIntent.putExtra("location", location)
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
+        super.onBackPressed()
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val loc = LatLng(location.lat, location.lng)
+        marker.snippet = "GPS : $loc"
+        return false
     }
 }

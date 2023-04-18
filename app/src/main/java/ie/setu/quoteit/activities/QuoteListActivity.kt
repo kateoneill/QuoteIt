@@ -18,6 +18,7 @@ import ie.setu.quoteit.models.QuoteModel
 import java.util.*
 import androidx.appcompat.widget.SearchView
 import ie.setu.quoteit.models.QuoteMemStore
+import ie.setu.quoteit.activities.QuoteMapsActivity
 import timber.log.Timber.i
 import kotlin.collections.ArrayList
 
@@ -42,7 +43,7 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
 
         searchView = findViewById(R.id.searchView)
 
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = QuoteAdapter(app.quotes.findAll(),this)
 
@@ -97,6 +98,10 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
                 val launcherIntent = Intent(this, QuoteActivity::class.java)
                 getResult.launch(launcherIntent)
             }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, QuoteMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -106,6 +111,12 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
         launcherIntent.putExtra("quote_edit", quote)
         getClickResult.launch(launcherIntent)
     }
+
+    private val mapIntentLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        )    { }
+
 
 
     @SuppressLint("NotifyDataSetChanged")
