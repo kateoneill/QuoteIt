@@ -46,4 +46,9 @@ class QuoteMemStore : QuoteStore {
     private fun logAll() {
         quotes.forEach { i("$it") }
     }
+
+    override fun findById(id:Long) : QuoteModel? {
+        val foundQuote: QuoteModel? = quotes.find { it.id == id }
+        return foundQuote
+    }
 }

@@ -59,6 +59,11 @@ class QuoteJSONStore(private val context: Context) : QuoteStore {
         serialize()
     }
 
+    override fun findById(id:Long) : QuoteModel? {
+        val foundQuote: QuoteModel? = quotes.find { it.id == id }
+        return foundQuote
+    }
+
     override fun delete(quote: QuoteModel) {
         quotes.remove(quote)
         serialize()

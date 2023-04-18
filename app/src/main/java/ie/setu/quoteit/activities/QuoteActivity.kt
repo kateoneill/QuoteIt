@@ -50,7 +50,7 @@ class QuoteActivity : AppCompatActivity() {
             quote = intent.extras?.getParcelable<QuoteModel>("quote_edit")!!
             binding.quotation.setText(quote.quotation)
             binding.bookTitle.setText(quote.bookTitle)
-            binding.pageNumber.setValue(quote.pageNumber)
+            binding.pageNumber.value = quote.pageNumber
             binding.quoteTheme.setSelection(quote.quoteTheme.length)
             binding.hintFave.isChecked.apply { true }
             binding.btnAdd.setText(R.string.save_quote)
@@ -62,7 +62,7 @@ class QuoteActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnAdd.setOnClickListener() {
+        binding.btnAdd.setOnClickListener {
             quote.quotation = binding.quotation.text.toString()
             quote.bookTitle = binding.bookTitle.text.toString()
             quote.pageNumber = binding.pageNumber.value
@@ -128,7 +128,6 @@ class QuoteActivity : AppCompatActivity() {
                 }
             }
     }
-
 
 
     private fun registerImagePickerCallback() {
