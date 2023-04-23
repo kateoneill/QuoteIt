@@ -43,54 +43,68 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
 
         searchView = findViewById(R.id.searchView)
 
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
+        val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = QuoteAdapter(app.quotes.findAll(),this)
 
         quoteAdapter = QuoteAdapter(quotes, this)
-        addQuoteToList()
     }
 
-    private fun addQuoteToList() {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.menu_main, menu)
+//        return super.onCreateOptionsMenu(menu)
+
+        // below line is to get our inflater
+        val inflater = menuInflater
+
+        // inside inflater we are inflating our menu file.
+        inflater.inflate(R.menu.menu_main, menu)
+
+        //search
+
+        val searchItem: MenuItem = menu.findItem(R.id.searchQuotes)
+        val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterQuotes(newText).toString()
-                return true
+            override fun onQueryTextChange(msg: String): Boolean {
+                i("hgcgjnch")
+                // inside on query text change method we are
+                // calling a method to filter our recycler view.
+                filter(msg)
+                return false
             }
         })
+        return true
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun filterQuotes(search: String?) {
+    private fun filter(search: String) {
+        i(search)
         if (search != null) {
-            val filteredQuoteList: ArrayList<QuoteModel> = ArrayList()
+            val filterList: ArrayList<QuoteModel> = ArrayList()
             quotes = app.quotes.findAll() as ArrayList<QuoteModel>
             for (quote in quotes) {
                 if (quote.quotation.lowercase(Locale.ROOT).contains(search.lowercase(Locale.getDefault()))) {
-                    filteredQuoteList.add(quote)
+                    filterList.add(quote)
                     i("This quote is in the quote system")
 //                    println(quote)
                 }
             }
 
-            if (filteredQuoteList.isEmpty()) {
+            if (filterList.isEmpty()) {
                 i("There are no quotes")
                 Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show()
             } else {
                 i("There are quotes")
-                quoteAdapter.setFilteredList(filteredQuoteList)
+                binding.recyclerView.adapter = QuoteAdapter(filterList, this@QuoteListActivity)
             }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
