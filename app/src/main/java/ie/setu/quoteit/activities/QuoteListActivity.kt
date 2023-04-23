@@ -41,8 +41,6 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
 
         app = application as MainApp
 
-        searchView = findViewById(R.id.searchView)
-
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = QuoteAdapter(app.quotes.findAll(),this)
