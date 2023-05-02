@@ -65,7 +65,7 @@
         android:scrollbarSize="10dp"
         android:scrollbarThumbVertical="@color/mindaro"
         android:scrollbars="horizontal"
-        android:translationY="280dp"
+        android:translationY="240dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </RelativeLayout>
 
