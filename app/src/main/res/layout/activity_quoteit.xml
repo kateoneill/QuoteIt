@@ -30,9 +30,11 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
         android:layout_width="403dp"
         android:layout_height="676dp"
         android:layout_below="@id/appBarLayout"
+        android:layout_marginTop="56dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        tools:layout_editor_absoluteX="8dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="389dp"
@@ -67,10 +69,10 @@ tools:context="ie.setu.quoteit.activities.QuoteActivity">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
+                android:contentDescription="@string/imagedesc"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_launcher"
-                android:contentDescription="@string/imagedesc" />
+                app:srcCompat="@mipmap/ic_launcher" />
 
             <EditText
                 android:id="@+id/quotation"
