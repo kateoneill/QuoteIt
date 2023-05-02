@@ -17,6 +17,9 @@ import ie.setu.quoteit.main.MainApp
 import ie.setu.quoteit.models.QuoteModel
 import java.util.*
 import androidx.appcompat.widget.SearchView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import ie.setu.quoteit.models.QuoteMemStore
 import ie.setu.quoteit.activities.QuoteMapsActivity
 import timber.log.Timber.i
@@ -30,6 +33,7 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
 
     private var quotes = ArrayList<QuoteModel>()
     private lateinit var quoteAdapter: QuoteAdapter
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +50,7 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
         binding.recyclerView.adapter = QuoteAdapter(app.quotes.findAll(),this)
 
         quoteAdapter = QuoteAdapter(quotes, this)
+        auth = Firebase.auth
     }
 
 
@@ -73,14 +78,15 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
                 i("hgcgjnch")
                 // inside on query text change method we are
                 // calling a method to filter our recycler view.
-                filter(msg)
+                searchQuotes(msg)
                 return false
             }
         })
         return true
     }
 
-    private fun filter(search: String) {
+    @SuppressLint("NotifyDataSetChanged")
+    private fun searchQuotes(search: String) {
         i(search)
         if (search != null) {
             val filterList: ArrayList<QuoteModel> = ArrayList()
@@ -99,6 +105,7 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
             } else {
                 i("There are quotes")
                 binding.recyclerView.adapter = QuoteAdapter(filterList, this@QuoteListActivity)
+                quoteAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -109,10 +116,20 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, QuoteActivity::class.java)
                 getResult.launch(launcherIntent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             R.id.item_map -> {
                 val launcherIntent = Intent(this, QuoteMapsActivity::class.java)
                 mapIntentLauncher.launch(launcherIntent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+            R.id.item_logout -> {
+                i("Logout")
+                auth.signOut()
+                val logoutIntent = Intent(this, SignInActivity::class.java)
+                logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(logoutIntent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -121,6 +138,7 @@ class QuoteListActivity : AppCompatActivity(), QuoteListener {
     override fun onQuoteClick(quote: QuoteModel) {
         val launcherIntent = Intent(this, QuoteActivity::class.java)
         launcherIntent.putExtra("quote_edit", quote)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         getClickResult.launch(launcherIntent)
     }
 
