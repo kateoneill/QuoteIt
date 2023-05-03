@@ -191,7 +191,7 @@ class QuoteActivity : AppCompatActivity() {
                         setResult(RESULT_OK)
                         finish()
                     }
-                    builder.setNeutralButton("Cancel"){dialogInterface , which ->
+                    builder.setNeutralButton("Cancel"){ _, _ ->
                         Toast.makeText(applicationContext,"Maybe it was a mistake, maybe you changed your mind, this quote is happy regardless",Toast.LENGTH_LONG).show()
                     }
                     val alertDialog: AlertDialog = builder.create()

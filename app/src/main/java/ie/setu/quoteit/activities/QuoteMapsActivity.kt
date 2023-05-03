@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -44,7 +45,9 @@ class QuoteMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         map.uiSettings.isZoomControlsEnabled = true
         app.quotes.findAll().forEach {
             val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.quotation).position(loc)
+            val options = MarkerOptions()
+                .title(it.quotation).position(loc)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
             map.addMarker(options)?.tag = it.id
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
             map.setOnMarkerClickListener(this)
@@ -56,6 +59,8 @@ class QuoteMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         val quote = app.quotes.findById(tag)
         contentBinding.currentQuotation.text = quote!!.quotation
         contentBinding.currentBookTitle.text = quote.bookTitle
+        contentBinding.currentTheme.text = quote.quoteTheme
+        contentBinding.currentPageNumber.text = quote.pageNumber.toString()
         Picasso.get().load(quote.image).into(contentBinding.imageView2)
         return false
     }
